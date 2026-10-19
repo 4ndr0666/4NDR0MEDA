@@ -44,3 +44,17 @@ as the articulation and every capture anchor in the record).
 Append-only. A genesis amendment is a new numbered block appended below,
 hash-referenced to the block it supersedes. Nothing above this line is ever
 edited in place.
+
+## Block 1 — Adoption (2026-10-19)
+
+ADOPTED by operator adjudication at kit-run time (4ndr0666; kit
+update-4ndr0meda-v1.3.sh --adopt-genesis). Block 0 above is ratified as the
+founding record of this protocol. Governing section: §5-GEN of PROTOCOL.md
+v1.5 (installed via --adopt-v15) or, pending that installation,
+PROTOCOL-v1.5-DELTA.md §5-GEN — same text, same numbering.
+
+On record: the Block-0 line "A10 is reserved lineage slot, not yet sealed"
+was accurate at creation; A10 was sealed the same day (see PIN-CHAIN.md and
+reference/LINEAGE-BUNDLE.md). Preserved unmodified above per append-only
+policy. The digest of Block-0 bytes is stated out-of-band (in-channel
+delivery pin + kit G5 print), never self-embedded.
