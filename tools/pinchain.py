@@ -42,6 +42,7 @@ ANCHORS = [
     ("A7", "GUP v7.0.0 .skill", "6ab62d4478aa47f3642f866005a9d9c36593498d2702848ba9d4a5955fdbde88"),
     ("A8", "Engineering skill (SUK v1.0)", "35f4419fe5cf6d959e6a5b0fca6ca4cfdece43f3e9f0117cc3cb8238e2584ea8"),
     ("A9", "Mode-churn incident diff", "4456924d028533eb22dd267af954dcf9971059d0941ae8824a4c3ccdd2837050"),
+    ("A10", "GWM lineage bundle", "6d61b9fbbc3354f0a6a033481ad9116e9702e24593afaeec7e0109182f883b67"),
 ]
 
 
@@ -100,6 +101,13 @@ def verify_local(results: list) -> None:
         else:
             results.append((f"{aid} {label}", "UNREACHABLE", "staged file absent"))
 
+    # A10 — lineage bundle rides in-repo (ordinary git object, LFS-exempt)
+    lb = HERE / "reference" / "gwm-lineage-2026-10-19.bundle"
+    if lb.exists():
+        check("A10 GWM lineage bundle", sha(lb.read_bytes()), ANCHORS[-1][2], results)
+    else:
+        results.append(("A10 GWM lineage bundle", "UNREACHABLE", "reference/ bundle absent"))
+
     # A6 — session-007 capture anchor (pre-image above the marker)
     s7 = GWM / "sessions" / "2026-10-19_session-007_ressurect.md"
     try:
@@ -119,7 +127,7 @@ def main() -> int:
         for aid, label, value in ANCHORS:
             print(f"{aid}  {label:<28} {value}")
         print("A6  session-007 capture anchor a2d794186103f5aadeaf77b0864b9d4295d3a3a422383394d57ba3537199091c")
-        print("A10 RESERVED — GWM lineage bundle (pending operator visibility adjudication)")
+        print("A10 GWM lineage bundle     6d61b9fbbc3354f0a6a033481ad9116e9702e24593afaeec7e0109182f883b67  (sealed 2026-10-19, reference/gwm-lineage-2026-10-19.bundle)")
         return 0
     results: list = []
     verify_local(results)

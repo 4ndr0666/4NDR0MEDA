@@ -65,7 +65,8 @@ Cross-references between layers are by **commit hash, never URL**. See
 └── reference/                 QUARANTINE — context, never canonical
     ├── REFERENCE-INDEX.md     digest registry + roles
     ├── GUP.txt                pointer to golden-unit-protocol v7.0.0
-    └── PLACEHOLDER-LINEAGE-BUNDLE.md   slot A10 (pending operator adjudication)
+    ├── LINEAGE-BUNDLE.md      A10 sealed — fallback contingency chain
+    └── gwm-lineage-2026-10-19.bundle   full substrate history incl. a207175
 ```
 
 ## Quickstart

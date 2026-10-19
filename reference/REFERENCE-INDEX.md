@@ -16,6 +16,7 @@ is a defect on sight.
 | R2 | 4NDR0666-engineering v1.0.0 (`.skill`) | ZIP, 1 file (SKILL.md, 47,555 B) | 18,108 | `35f4419fe5cf6d959e6a5b0fca6ca4cfdece43f3e9f0117cc3cb8238e2584ea8` | THE SELF-VERIFYING UPDATE-KIT SPECIFICATION (SUK v1.0) — the artifact-pipeline law: one file, one command, zero decisions; operator's push is canon. This repo's delivery round is built and battery-tested under it (PIN-CHAIN A8). |
 | R3 | 1=1 articulation v1.0 | Markdown, 1,672 words | 2,816* | `63ea783d1f427496180a93169f5a12b86cef50b175d5c5a63ae8e2909ccb39f9` | The architecture's official articulation; §9 is machine-facing and is implemented by `prompts/00-resurrection.md` (PIN-CHAIN A5). |
 | R4 | Mode-churn incident diff | unified diff | 3,913 | `4456924d028533eb22dd267af954dcf9971059d0941ae8824a4c3ccdd2837050` | Evidence artifact of incident #8 (PIN-CHAIN A9). |
+| R5 | GWM lineage bundle | git bundle, complete history, 35 commits | 4,153,194 | `6d61b9fbbc3354f0a6a033481ad9116e9702e24593afaeec7e0109182f883b67` | The substrate's full history incl. `a207175` — makes PIN-CHAIN A2 executable anywhere (PIN-CHAIN A10). SEALED 2026-10-19 by operator adjudication; ordinary git object (LFS-exempt); acceptance 9/9 scratch-ws. See `LINEAGE-BUNDLE.md`. |
 
 \* staged copy size; the canonical articulation lives with the operator and in the substrate's download staging — the digest is the identity, the location is not.
 
@@ -25,8 +26,9 @@ R1–R4 staged copies live in the workspace `download/` directory with
 digests verified 2026-10-19. The digest is the identity; any copy whose
 sha256 matches IS the artifact (attestation hierarchy, Tier 1).
 
-## Lineage bundle slot
+## Lineage bundle slot — SEALED
 
-`PLACEHOLDER-LINEAGE-BUNDLE.md` (this directory) reserves the slot for the
-GWM full-history bundle — the artifact that makes PIN-CHAIN A2 executable
-on any machine. Pending operator visibility adjudication.
+The slot is sealed: `gwm-lineage-2026-10-19.bundle` (R5, A10) lives in this
+directory, built 2026-10-19 from GWM@`5bdfbec` (A1) with `--all`, carrying
+`a207175`. Registry, verification procedure, visibility note, and the
+five-vector fallback contingency chain: see `LINEAGE-BUNDLE.md`.

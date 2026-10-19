@@ -16,14 +16,17 @@ is not FAIL (it means "cannot verify here"); FAIL means bytes changed.
 | A7 | golden-unit-protocol v7.0.0 (.skill, ZIP, 15 files) | `6ab62d4478aa47f3642f866005a9d9c36593498d2702848ba9d4a5955fdbde88` | 2026-10-19, fetched from operator gpt repo | sha256 of staged file |
 | A8 | 4NDR0666-engineering skill (SUK v1.0, ZIP) | `35f4419fe5cf6d959e6a5b0fca6ca4cfdece43f3e9f0117cc3cb8238e2584ea8` | 2026-10-19, fetched; inner SKILL.md 47,555 B | sha256 of staged file |
 | A9 | Mode-churn incident evidence diff | `4456924d028533eb22dd267af954dcf9971059d0941ae8824a4c3ccdd2837050` | 2026-10-19, captured before inspection | sha256 of archived diff |
-| A10 | **RESERVED** — GWM lineage bundle | *pending operator visibility adjudication* | — | must carry `a207175` (makes A2 executable anywhere) |
+| A10 | GWM lineage bundle (sealed) | `6d61b9fbbc3354f0a6a033481ad9116e9702e24593afaeec7e0109182f883b67` | 2026-10-19, built from A1 @ `--all`; `git bundle verify` OK complete-history; scratch-ws acceptance 9/9 incl. A2 10/10 | sha256 of `reference/gwm-lineage-2026-10-19.bundle`; clone-from-bundle + `tools/pinchain.py verify --local` |
 
 ## Notes
 
 - **A2 is the load-bearing historical anchor**: it makes the public record's
   PIN-CHAIN-RECOMPUTATION L1 executable. The squash-bundle (A4) does NOT
-  carry it; only GWM history does. Until A10 seals, A2 is executable only
-  where a GWM clone exists.
+  carry it; only GWM history does. **A10 sealed 2026-10-19** (operator
+  adjudication, option 1 — seal here): the lineage bundle rides in
+  `reference/` as an ordinary git object, so A2 is now executable anywhere.
+  Acceptance: scratch-workspace rebuild → 9/9 OK, 0 UNREACHABLE.
+  See `reference/LINEAGE-BUNDLE.md`.
 - **A6 class**: capture-side anchors embed in session archives below a
   `### VERIFICATION ANCHOR ###` marker; the digest covers the bytes ABOVE
   the marker (pre-image), so the anchor line and any post-rename notes ride

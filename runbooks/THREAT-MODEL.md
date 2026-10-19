@@ -18,7 +18,7 @@ and has been exercised.
 | 6 | 2026-10-19 (×2) | Context-window death | session context lost mid-collaboration | worklog Tasks 1–6 | append-only worklog; state-echo per material turn | MITIGATED |
 | 7 | 2026-10-19 | Surface capability change | chat+agent → agentic-only; capture surface redefined | platform observation, operator attestation | capability declaration in boot echo; exporter-forge profiles | MITIGATED |
 | 8 | 2026-10-19 | Local worktree mode churn | 30+ files flipped 100644→100755, zero content change | `4456924d…37050` (A9) | `core.fileMode false` (bootstrap P0); content-vs-mode classification | MITIGATED |
-| 9 | 2026-10-19 | Public-tree anchor gap | CDP L1 not executable in the squash | PIN-CHAIN A2/A4 | GWM@a207175 recompute (10/10); A10 lineage bundle reserved | OPEN (A10 pending operator) |
+| 9 | 2026-10-19 | Public-tree anchor gap | CDP L1 not executable in the squash | PIN-CHAIN A2/A4 | GWM@a207175 recompute (10/10); **A10 SEALED 2026-10-19** — lineage bundle in `reference/` (ordinary git object), scratch-ws acceptance 9/9 | CLOSED |
 | 10 | 2026-10-19 | Artifact-pipeline dependency | delivery depended on skills + channel behavior | `35f4419f…4ea8` (A8, SUK v1.0) | SUK-compliant kits; in-channel sha256 = out-of-band pin | MITIGATED |
 
 ## Contingency matrix (edge cases planned for)
