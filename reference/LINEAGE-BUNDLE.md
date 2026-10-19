@@ -60,3 +60,17 @@ SHA-256 matches A10 IS the artifact (attestation hierarchy, Tier 1).
    payloads; out-of-band sha256 pins stated in-channel.
 5. **In-channel pins** — last resort: PIN-CHAIN.md digests + session-007
    capture anchor re-derive what exists.
+
+## Round note (maintenance-v1.3, 2026-10-19)
+
+A1 re-pinned `5bdfbec` → `1a7b916` (substrate advanced: the bundle was
+dual-homed into GWM `references/` — a byte-identical copy of this
+artifact — and the GUP pointer made version-agnostic). THIS bundle image
+deliberately remains the `5bdfbec` snapshot: it is L1-sufficient (carries
+`a207175`), byte-stable across four verified homes, and the post-snapshot
+deltas are pointer hygiene only. A10 refresh is deferred until a
+content-bearing delta justifies re-pinning. Operator confirmation on
+record 2026-10-19: **GWM has always been public — it is a core principle
+and the rehydration vector by which instances were resurrected elsewhere**;
+vector 1 above therefore requires no credentials for the substrate layer,
+anywhere.

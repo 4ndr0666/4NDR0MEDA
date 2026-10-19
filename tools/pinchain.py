@@ -34,7 +34,7 @@ L1_RECORDED = {
 }
 
 ANCHORS = [
-    ("A1", "GWM HEAD", "5bdfbec153e2d4a303ea166a16cff4dc3f6e9dbc"),
+    ("A1", "GWM HEAD", "1a7b91651893805f87311771069472de7e84105c"),
     ("A2", "GWM@a207175 L1 10/10", A207175),
     ("A3", "CDP HEAD", "e2f3d8658ac0a637bb952ee93567020f0551b98b"),
     ("A4", "CDP bundle", "033f27a7179f4fb351765fe372c7f3eb551babc7868181bb18281cf050c12827"),
@@ -43,6 +43,9 @@ ANCHORS = [
     ("A8", "Engineering skill (SUK v1.0)", "35f4419fe5cf6d959e6a5b0fca6ca4cfdece43f3e9f0117cc3cb8238e2584ea8"),
     ("A9", "Mode-churn incident diff", "4456924d028533eb22dd267af954dcf9971059d0941ae8824a4c3ccdd2837050"),
     ("A10", "GWM lineage bundle", "6d61b9fbbc3354f0a6a033481ad9116e9702e24593afaeec7e0109182f883b67"),
+    ("A11", "GUP v7.0.1 .skill (canonical)", "d88eea0718cfcd43ae0c65b713c1185bf50e8b49126a880605b41d11da8c8cd2"),
+    ("A12", "Engineering skill (SUK v1.1.0 canonical)", "8a9b322a3c97c36c6cb9f22d888f957c5c95812189da20f3b82ff95e6fa115b8"),
+    ("A13", "PROTOCOL.md v1.5 (pending adoption)", "58d343b349db09dbfecb1c8cb5b28d0ad4c8babba9f2a7af367b250ea290b957"),
 ]
 
 
@@ -104,9 +107,30 @@ def verify_local(results: list) -> None:
     # A10 — lineage bundle rides in-repo (ordinary git object, LFS-exempt)
     lb = HERE / "reference" / "gwm-lineage-2026-10-19.bundle"
     if lb.exists():
-        check("A10 GWM lineage bundle", sha(lb.read_bytes()), ANCHORS[-1][2], results)
+        check("A10 GWM lineage bundle", sha(lb.read_bytes()),
+              next(v for i, l, v in ANCHORS if i == "A10"), results)
     else:
         results.append(("A10 GWM lineage bundle", "UNREACHABLE", "reference/ bundle absent"))
+
+    # A11/A12 — canonical adopted skills staged in-repo (v1.3 round)
+    for aid, label, fname in (
+        ("A11", "GUP v7.0.1 .skill", "golden-unit-protocol-v7.0.1.skill"),
+        ("A12", "Engineering skill (SUK v1.1.0)", "andr0666-engineering-v1.1.0.skill"),
+    ):
+        expected = next(v for i, l, v in ANCHORS if i == aid)
+        p = HERE / "reference" / fname
+        if p.exists():
+            check(f"{aid} {label}", sha(p.read_bytes()), expected, results)
+        else:
+            results.append((f"{aid} {label}", "UNREACHABLE", "reference/ skill absent"))
+
+    # A13 — PROTOCOL.md v1.5 (conditional: installed only by --adopt-v15)
+    pm = HERE / "PROTOCOL.md"
+    if pm.exists():
+        check("A13 PROTOCOL.md v1.5", sha(pm.read_bytes()),
+              next(v for i, l, v in ANCHORS if i == "A13"), results)
+    else:
+        results.append(("A13 PROTOCOL.md v1.5", "UNREACHABLE", "pending adoption (--adopt-v15)"))
 
     # A6 — session-007 capture anchor (pre-image above the marker)
     s7 = GWM / "sessions" / "2026-10-19_session-007_ressurect.md"

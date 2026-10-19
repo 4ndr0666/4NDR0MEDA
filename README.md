@@ -39,13 +39,13 @@ Cross-references between layers are by **commit hash, never URL**. See
 4ndr0meda/
 ├── README.md                  this file
 ├── GENESIS.md                 founding block (v0, pending v1.5 adoption)
-├── PIN-CHAIN.md               live cross-repo anchor registry (A1–A10)
+├── PIN-CHAIN.md               live cross-repo anchor registry (A1–A13)
 ├── PROTOCOL-v1.5-DELTA.md     draft delta sections for operator adjudication
 ├── bootstrap.sh               single entrypoint — A.N.D.R.O. phases P0–P5
 ├── MANIFEST.sha256            integrity layer over this tree (excludes itself)
 ├── tools/
 │   ├── manifest.py            build / verify the tree hash manifest
-│   ├── pinchain.py            verify anchors A1–A10 (local recompute)
+│   ├── pinchain.py            verify anchors A1–A13 (local recompute)
 │   ├── reconcile.py           two-tree divergence triage (never silent merge)
 │   ├── state_echo.py          emit the session checkpoint block
 │   └── exporter-forge/        per-platform capture-exporter generator
@@ -63,10 +63,12 @@ Cross-references between layers are by **commit hash, never URL**. See
 ├── templates/
 │   └── STATE-ECHO-TEMPLATE.md checkpoint block template
 └── reference/                 QUARANTINE — context, never canonical
-    ├── REFERENCE-INDEX.md     digest registry + roles
-    ├── GUP.txt                pointer to golden-unit-protocol v7.0.0
+    ├── REFERENCE-INDEX.md     digest registry + roles (R1–R7)
+    ├── GUP.txt                pointer + canonical GUP digests (v7.0.0 consumed, v7.0.1 adopted)
     ├── LINEAGE-BUNDLE.md      A10 sealed — fallback contingency chain
-    └── gwm-lineage-2026-10-19.bundle   full substrate history incl. a207175
+    ├── gwm-lineage-2026-10-19.bundle   full substrate history incl. a207175
+    ├── golden-unit-protocol-v7.0.1.skill   canonical adopted GUP (A11)
+    └── andr0666-engineering-v1.1.0.skill   SUK v1.1.0 canonical (A12)
 ```
 
 ## Quickstart

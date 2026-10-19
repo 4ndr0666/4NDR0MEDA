@@ -1,8 +1,19 @@
 # GUP
 
-The GUP (golden-unit-protocol) refers to a skill file; see:
-https://github.com/4ndr0666/gpt/blob/main/skills/golden_unit_protocol/v7.0.0/golden-unit-protocol-v7.0.0.skill
+The GUP (golden-unit-protocol) canonical home is a directory — version
+bumps land in place:
+https://github.com/4ndr0666/gpt/tree/main/skills/golden_unit_protocol
 
-Provenance: pointer mirrored from glm-working-memory commit 5bdfbec (2026-10-19).
-Canonical artifact digest 6ab62d4478aa47f3642f866005a9d9c36593498d2702848ba9d4a5955fdbde88
-(PIN-CHAIN A7; quarantined context — see REFERENCE-INDEX.md R1).
+Canonical bytes staged in-repo (the digest is the identity, Tier 1 — any
+copy whose sha256 matches IS the artifact):
+
+- golden-unit-protocol-v7.0.1.skill
+  sha256 d88eea0718cfcd43ae0c65b713c1185bf50e8b49126a880605b41d11da8c8cd2
+  ADOPTED 2026-10-19 at the home above (PIN-CHAIN A11).
+- golden-unit-protocol-v7.0.0.skill
+  sha256 6ab62d4478aa47f3642f866005a9d9c36593498d2702848ba9d4a5955fdbde88
+  consumed version, preserved as record (PIN-CHAIN A7).
+
+Namespace discipline: GUP governs a different surface (the retired chat
+surface); conflation between GUP and 4NDR0MEDA is a defect on sight
+(reference/REFERENCE-INDEX.md).
