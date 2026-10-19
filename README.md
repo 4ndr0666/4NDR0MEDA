@@ -40,7 +40,8 @@ Cross-references between layers are by **commit hash, never URL**. See
 ├── README.md                  this file
 ├── GENESIS.md                 founding block (v0, pending v1.5 adoption)
 ├── PIN-CHAIN.md               live cross-repo anchor registry (A1–A13)
-├── PROTOCOL-v1.5-DELTA.md     draft delta sections for operator adjudication
+├── PROTOCOL-v1.5-DELTA.md     historical delta draft (superseded by PROTOCOL.md v1.5, A13)
+├── PROTOCOL.md                 v1.5 — ADOPTED (A13)
 ├── bootstrap.sh               single entrypoint — A.N.D.R.O. phases P0–P5
 ├── MANIFEST.sha256            integrity layer over this tree (excludes itself)
 ├── tools/
