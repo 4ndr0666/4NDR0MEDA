@@ -1,0 +1,8 @@
+# GUP
+
+The GUP (golden-unit-protocol) refers to a skill file; see:
+https://github.com/4ndr0666/gpt/blob/main/skills/golden_unit_protocol/v7.0.0/golden-unit-protocol-v7.0.0.skill
+
+Provenance: pointer mirrored from glm-working-memory commit 5bdfbec (2026-10-19).
+Canonical artifact digest 6ab62d4478aa47f3642f866005a9d9c36593498d2702848ba9d4a5955fdbde88
+(PIN-CHAIN A7; quarantined context — see REFERENCE-INDEX.md R1).

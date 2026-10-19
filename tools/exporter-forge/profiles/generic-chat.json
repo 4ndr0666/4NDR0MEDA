@@ -1,0 +1,22 @@
+{
+  "name": "generic-chat",
+  "version": "1.0.0",
+  "surface": "any third-party chat surface (cross-platform rehydration class)",
+  "capture_method": "manual paste or DOM extraction as available; anchor computed on whatever bytes land",
+  "anchor_cmd": "awk '/^### VERIFICATION ANCHOR ###$/{exit} {print}' sessions/<file>.md | sha256sum",
+  "rules": [
+    {
+      "id": "F-003-chat-id",
+      "action": "Validate any captured session/thread ID against canonical form; third-party formats are recorded verbatim with a WARN if non-conforming.",
+      "pattern": "^c[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    {
+      "id": "S3-truncation",
+      "action": "Truncation is RE-ASK-REQUIRED, never assumed (PROTOCOL §3)."
+    },
+    {
+      "id": "F-002-post-end-quarantine",
+      "action": "Content past unstated transmission boundaries is quarantined until the operator adjudicates it."
+    }
+  ]
+}

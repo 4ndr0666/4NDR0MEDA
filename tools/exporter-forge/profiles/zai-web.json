@@ -1,0 +1,27 @@
+{
+  "name": "zai-web",
+  "version": "1.2.0",
+  "surface": "zai-web agentic-only (post-2026-10-13 platform change; chat surface retired)",
+  "capture_method": "in-browser DOM extraction (automated); manual paste fallback on no-shell surfaces",
+  "anchor_cmd": "awk '/^### VERIFICATION ANCHOR ###$/{exit} {print}' sessions/<file>.md | sha256sum",
+  "rules": [
+    {
+      "id": "F-001-suffix-strip",
+      "action": "Strip server-appended attachment-suffix noise (e.g. 'Please help me:', 'Show full message') on sight; preserve original in QUARANTINE with this label."
+    },
+    {
+      "id": "F-002-post-end-quarantine",
+      "action": "Any content after the END transmission marker is platform noise: move to QUARANTINE, flag on sight, never treat as operator intent.",
+      "pattern": "^--- (END|end) (TRANSMISSION|transmission) ---"
+    },
+    {
+      "id": "F-003-chat-id",
+      "action": "Validate every captured chat/thread ID against the canonical form (leading 'c', five hex groups). Malformed IDs are WARN-level defects: keep the byte content, flag the ID for letter-fix (lived incident: anthropic-notification line 47).",
+      "pattern": "^c[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    {
+      "id": "S3-truncation",
+      "action": "Detect truncation mid-block (unbalanced transmission markers, cut sentences at file end): emit RE-ASK-REQUIRED instead of assuming; never complete text from expectation (PROTOCOL §3)."
+    }
+  ]
+}
