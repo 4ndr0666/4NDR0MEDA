@@ -7,7 +7,7 @@ is not FAIL (it means "cannot verify here"); FAIL means bytes changed.
 
 | ID | Pins | Value (SHA-256 / SHA-1) | Verified | Re-verify |
 |----|------|--------------------------|----------|-----------|
-| A1 | GWM HEAD (living substrate) | `1a7b91651893805f87311771069472de7e84105c` | 2026-10-19, fetch+pull; sessions/MANIFEST 13/13; v1.3 re-pin — HEAD advanced `5bdfbec`→`e5b901e`→`1a7b916` (lineage-bundle dual-home into GWM `references/`, byte-identical to A10; GUP pointer made version-agnostic); delta inspected, zero pinned-artifact drift | `python3 tools/pinchain.py verify --local` (LOCAL) |
+| A1 | GWM HEAD (living substrate) | `1e165df76899443f6fcfe9c57393da81d86ae649` | 2026-10-20, fetch+pull; sessions/MANIFEST 15/15 remote, 16/16 after Task-23 local pin; v1.5-era re-pin — HEAD advanced `1a7b916`→`bbdadb4`→`a7714ea`→`f08e083`→`e9e9987`→`39242fc`→`40d7e2c`→`ef35891`→`1c68690`→`7a683d5`→`1e165df` (Tasks 17–23: witness boards commits + operator sessions/treats [Ep191, YouTube fleet transcript] + serverside-anomaly capture); delta inspected — A10/A5/A13/A11/A12 byte-exact, A2 anchor commit `a207175` present, capture A6-class anchor PASS `b1efa5c0…281411`; zero pinned-artifact drift | `python3 tools/pinchain.py verify --local` (LOCAL) |
 | A2 | GWM@a207175 → CDP L1 pre-rename pins | commit `a207175474b850a8d001c19ddb2325f7e49f4084`; **10/10 OK** | 2026-10-19, `git show` loop (LOCAL) | `tools/pinchain.py` L1 routine |
 | A3 | CDP HEAD (frozen public record) | `e2f3d8658ac0a637bb952ee93567020f0551b98b` | 2026-10-19, fresh clone; root MANIFEST 47/47 | clone + `sha256sum -c MANIFEST.sha256` (LOCAL) |
 | A4 | CDP portable bundle (LFS) | `033f27a7179f4fb351765fe372c7f3eb551babc7868181bb18281cf050c12827` | 2026-10-19, pointer-OID match + `git bundle verify` OK | sha256 of retrieved bundle |
@@ -45,6 +45,15 @@ is not FAIL (it means "cannot verify here"); FAIL means bytes changed.
   bundle image deliberately remains the `5bdfbec` snapshot — L1-sufficient
   and byte-stable across four homes; refresh deferred until a
   content-bearing delta (see `reference/LINEAGE-BUNDLE.md`).
+- **v1.5-era maintenance round (2026-10-20)**: A1 advanced to `1e165df`
+  after a ten-commit substrate advance (Tasks 17–23) was inspected —
+  witness boards commits + operator sessions/treats (Ep191, YouTube fleet
+  transcript) + the serverside-anomaly capture (reasoning-exposure class,
+  first record; capture-side A6-class anchor verified byte-exact
+  `b1efa5c0…281411`; capture pinned into `sessions/MANIFEST.sha256`, 16/16).
+  All pinned artifacts byte-exact; A2 anchor commit `a207175` present;
+  zero drift. The A1 tripwire fired twice in the interim (Tasks 19/21) —
+  detection validated on legitimate motion, then silenced by this re-pin.
 - **A11/A12 role note**: the canonical ADOPTED revisions of both governing
   skills now travel in-repo (`reference/`), so a fresh clone carries the
   full governing set for anywhere-rehydration. A7/A8 remain the pins of
