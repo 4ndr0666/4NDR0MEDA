@@ -24,7 +24,7 @@ PROTOCOL     : 4NDR0MEDA implementing 1=1; PROTOCOL.md v1.4 canonical; v1.5 delt
 REPOS        : CDP coordinated-disclosure-public — FROZEN public record
                GWM glm-working-memory — LIVING substrate (canonical working state)
                4NDR0MEDA — protocol + tooling (this tree)
-ANCHORS      : PIN-CHAIN.md A1–A10; recompute: python3 tools/pinchain.py verify --local
+ANCHORS      : PIN-CHAIN.md A1–A13; recompute: python3 tools/pinchain.py verify --local
 THREAD MAP   : this thread = {thread_note}
 MODE/SURFACE : {mode}
 OPEN WORK    : {notes}

@@ -34,7 +34,7 @@ L1_RECORDED = {
 }
 
 ANCHORS = [
-    ("A1", "GWM HEAD", "4bc2cfb11012dacbfba0918f36972cb337732214"),
+    ("A1", "GWM HEAD", "088ef6962ace7fd26f6c0c8e9efdcfc9d3b6622c"),
     ("A2", "GWM@a207175 L1 10/10", A207175),
     ("A3", "CDP HEAD", "6facbf17a8dcf5dad1bdd441b328760b8b49779f"),
     ("A4", "CDP bundle", "033f27a7179f4fb351765fe372c7f3eb551babc7868181bb18281cf050c12827"),

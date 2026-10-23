@@ -9,7 +9,7 @@
 | **Ops namespace** | A.N.D.R.O. — Axiomatic Nonvolatile Deterministic Recovery Operations |
 | **Operator** | 4ndr0666 — author and committer of record, final adjudicator; the human's hands are the last writer |
 | **Instance** | GLM (Z.ai), designation **Witness** — see accurately, record honestly, including about itself |
-| **Provenance rules** | PROTOCOL.md v1.4 §3 (canonical, in the working substrate); v1.5 delta drafted in this repo |
+| **Provenance rules** | PROTOCOL.md v1.5 §3 (canonical, in the working substrate) — ADOPTED (A13, digest byte-stable `58d343b3…`) |
 | **Established** | 2026-10-19; scaffold authored by the Witness instance under §4 AI-involvement disclosure |
 
 ## The one-statement core
@@ -26,7 +26,7 @@ recall — is the architecture.
 
 | Layer | Repo | Status |
 |---|---|---|
-| Public disclosure record | `4ndr0666/coordinated-disclosure-public` | **FROZEN** — never mutated |
+| Public disclosure record | `4ndr0666/coordinated-disclosure-public` | **FROZEN** — append-only via sanctioned disclosure acts (R2-37-shape; Task-47 reconciliation sanctioned) |
 | Living working substrate | `4ndr0666/glm-working-memory` | **CANONICAL** for working state, sessions, findings, ledger |
 | Protocol + tooling | `4ndr0666/4NDR0MEDA` (this repo) | protocol formalization, bootstrap, tools, prompts, runbooks |
 
@@ -38,7 +38,7 @@ Cross-references between layers are by **commit hash, never URL**. See
 ```
 4ndr0meda/
 ├── README.md                  this file
-├── GENESIS.md                 founding block (v0, pending v1.5 adoption)
+├── GENESIS.md                 founding block (v0 + adoption Block 1 — v1.5 ADOPTED)
 ├── PIN-CHAIN.md               live cross-repo anchor registry (A1–A13)
 ├── PROTOCOL-v1.5-DELTA.md     historical delta draft (superseded by PROTOCOL.md v1.5, A13)
 ├── PROTOCOL.md                 v1.5 — ADOPTED (A13)

@@ -1,6 +1,6 @@
 # GENESIS BLOCK — 4NDR0MEDA
 
-**Status:** v0 — pending adoption into PROTOCOL v1.5 (see `PROTOCOL-v1.5-DELTA.md` §5-GEN).
+**Status:** v0 + Block 1 — ADOPTED into PROTOCOL v1.5 (A13; adoption recorded in Block 1 below; see `PROTOCOL-v1.5-DELTA.md` §5-GEN for the draft lineage).
 **Created:** 2026-10-19 (UTC) · **Surface:** zai-web, agentic-only (post platform change of ~2026-10-13).
 **Author of record:** 4ndr0666 · **Drafted by:** the Witness instance (GLM/Z.ai), worklog Task 7, under §4 AI-involvement disclosure.
 
@@ -50,7 +50,7 @@ edited in place.
 ADOPTED by operator adjudication at kit-run time (4ndr0666; kit
 update-4ndr0meda-v1.3.sh --adopt-genesis). Block 0 above is ratified as the
 founding record of this protocol. Governing section: §5-GEN of PROTOCOL.md
-v1.5 (installed via --adopt-v15) or, pending that installation,
+v1.5 — ADOPTED (A13; installed via the kit's adoption path and recorded in GENESIS Block 1).
 PROTOCOL-v1.5-DELTA.md §5-GEN — same text, same numbering.
 
 On record: the Block-0 line "A10 is reserved lineage slot, not yet sealed"
