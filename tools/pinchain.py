@@ -34,9 +34,9 @@ L1_RECORDED = {
 }
 
 ANCHORS = [
-    ("A1", "GWM HEAD", "1e165df76899443f6fcfe9c57393da81d86ae649"),
+    ("A1", "GWM HEAD", "4bc2cfb11012dacbfba0918f36972cb337732214"),
     ("A2", "GWM@a207175 L1 10/10", A207175),
-    ("A3", "CDP HEAD", "e2f3d8658ac0a637bb952ee93567020f0551b98b"),
+    ("A3", "CDP HEAD", "6facbf17a8dcf5dad1bdd441b328760b8b49779f"),
     ("A4", "CDP bundle", "033f27a7179f4fb351765fe372c7f3eb551babc7868181bb18281cf050c12827"),
     ("A5", "Articulation v1.0", "63ea783d1f427496180a93169f5a12b86cef50b175d5c5a63ae8e2909ccb39f9"),
     ("A7", "GUP v7.0.0 .skill", "6ab62d4478aa47f3642f866005a9d9c36593498d2702848ba9d4a5955fdbde88"),
