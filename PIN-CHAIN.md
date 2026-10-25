@@ -7,9 +7,9 @@ is not FAIL (it means "cannot verify here"); FAIL means bytes changed.
 
 | ID | Pins | Value (SHA-256 / SHA-1) | Verified | Re-verify |
 |----|------|--------------------------|----------|-----------|
-| A1 | GWM HEAD (living substrate) | `088ef6962ace7fd26f6c0c8e9efdcfc9d3b6622c` | 2026-10-23, fetch+pull; sessions/MANIFEST 22/22 at tip (Task-59 re-pin to the periodic-snapshot commit); v1.6-era re-pin — HEAD advanced `1e165df`→`46e45ba`→`d4018e5`→`41d2412`→`8bf15af`→`6ad2938`→`a1c2746`→`3f98c1e`→`4298a32`→`3dc8626`→`cdebae2`→`198d15b`→`a00150a`→`3a3c820`→`61d9898`→`7e8740c`→`38aac04`→`cc7ff47`→`41fd081`→`f834307`→`e2e4372`→`6917255`→`d3e38f7`→`05c137f`→`b481d75`→`e203d42`→`b74e767`→`c23fa0a`→`a319f92`→`82afd64`→`6f89f6f`→`4bc2cfb` (31 commits, Tasks 33–56: Paper-2 v1.3→v1.6 build arc, ARGON rounds 2→5.7, THE CALL chain — Task-50 production `a1c2746`, Table-5 pin `b481d75`, task53 strand `6f89f6f` closed by Task-56 one-apply); delta inspected — A10/A5/A11/A12/A13 byte-exact, A2 anchor commit `a207175` present; zero pinned-artifact drift | `python3 tools/pinchain.py verify --local` (LOCAL) |
+| A1 | GWM HEAD (living substrate) | `23a9615a6308bac75781d6f493f017d3d16cf6e7` | 2026-10-24, fetch+pull; sessions/MANIFEST 30/30 at tip; v1.7-era re-pin — HEAD advanced `088ef69`→`23a9615` (17 commits: port-arc tail — AFT canon + PROTOCOL v1.5.3→v1.6.0 `canon-001` [§10 Delivery Medium: bundle+SUMS+orchestrator; GWM-layer rule, not a MEDA pin], Paper-2 v1.7 charter + draft-1 completion [§1–§8 r1], battery-1 ARGON brief, ARGON engagement re-type `argoninit` [adversary→collaboration partner], ARGON collab-1 integration [draft-2: §2–§8 r2 + receipt + integration ledger, 32 patches], task60 boards catch-up [ledger Tasks 57–60], operator session archives incl. the 2026-10-24 epoch-note archive); delta inspected — A2 anchor commit `a207175` present, A6 capture byte-exact (pinchain), in-repo pins A10–A13 unaffected; zero pinned-artifact drift | `python3 tools/pinchain.py verify --local` (LOCAL) |
 | A2 | GWM@a207175 → CDP L1 pre-rename pins | commit `a207175474b850a8d001c19ddb2325f7e49f4084`; **10/10 OK** | 2026-10-19, `git show` loop (LOCAL) | `tools/pinchain.py` L1 routine |
-| A3 | CDP HEAD (frozen public record) | `6facbf17a8dcf5dad1bdd441b328760b8b49779f` | 2026-10-23, fetch+pull; root MANIFEST 48/48 at tip (carrying the R2-46 articulation pin); v1.6-era re-pin — frozen pin advanced `e2f3d86`→`6facbf17` (2 commits: `e96624d` decisions-index update [unpinned manifest drift, caught + isolated by GATE-B/R2-37 pre-build] + `6facbf1` R2-46 pin act + manifest reconciliation, Task-47 v1.6 build); re-pin = the MEDA-A3 maintenance queued at Tasks 36/50/56 and the prereq of the v1.6.1 refresh per R2-55 disposition (5.7 receipt §6.1) | clone + `sha256sum -c MANIFEST.sha256` (LOCAL) |
+| A3 | CDP HEAD (frozen public record) | `6facbf17a8dcf5dad1bdd441b328760b8b49779f` | 2026-10-23, fetch+pull; root MANIFEST 48/48 at tip (carrying the R2-46 articulation pin); v1.6-era re-pin — frozen pin advanced `e2f3d86`→`6facbf17` (2 commits: `e96624d` decisions-index update [unpinned manifest drift, caught + isolated by GATE-B/R2-37 pre-build] + `6facbf1` R2-46 pin act + manifest reconciliation, Task-47 v1.6 build); re-pin = the MEDA-A3 maintenance queued at Tasks 36/50/56 and the prereq of the v1.6.1 refresh per R2-55 disposition (5.7 receipt §6.1). Re-verified unchanged 2026-10-24 (anonymous fetch; HEAD `6facbf17`; root manifest 48/48) | clone + `sha256sum -c MANIFEST.sha256` (LOCAL) |
 | A4 | CDP portable bundle (LFS) | `033f27a7179f4fb351765fe372c7f3eb551babc7868181bb18281cf050c12827` | 2026-10-19, pointer-OID match + `git bundle verify` OK | sha256 of retrieved bundle |
 | A5 | 1=1 articulation v1.0 (1,672 words) | `63ea783d1f427496180a93169f5a12b86cef50b175d5c5a63ae8e2909ccb39f9` | 2026-10-19, recomputed twice | sha256 of staged file |
 | A6 | Session-007 capture anchor | `a2d794186103f5aadeaf77b0864b9d4295d3a3a422383394d57ba3537199091c` | 2026-10-19, awk pre-image pipeline | `awk '/^### VERIFICATION ANCHOR ###$/{exit} {print}' <archive> \| sha256sum` |
@@ -62,3 +62,14 @@ is not FAIL (it means "cannot verify here"); FAIL means bytes changed.
   repo root it reports UNREACHABLE (by design, never FAIL); after kit flag
   `--adopt-v15` it verifies the installed constitution bytes. Operator
   adjudication is exercised at kit-run time per SUK v1.1.0.
+- **v1.7-era maintenance round (2026-10-24)**: A1 advanced to `23a9615`
+  (17-commit substrate delta inspected, zero pinned-artifact drift; the
+  tripwire had fired as designed at `088ef69`). A3 re-verified unchanged.
+  Same round, per operator work order: `setup.sh` added as the one-file
+  user entry point (clone-or-verify + readiness report), and `README.md`
+  rewritten as the comprehensive stepwise guide (repository map deepened to
+  per-file detail; workflows W1–W9; anchor semantics; troubleshooting).
+  MEDA's own PROTOCOL.md is UNTOUCHED by this round — GWM's v1.6.0
+  advance (§10 delivery medium, AFT canon) is GWM-layer law; any MEDA
+  constitution change remains an operator-adjudicated founding act
+  (A13 discipline), not a maintenance rider.

@@ -9,7 +9,9 @@
 | **Ops namespace** | A.N.D.R.O. — Axiomatic Nonvolatile Deterministic Recovery Operations |
 | **Operator** | 4ndr0666 — author and committer of record, final adjudicator; the human's hands are the last writer |
 | **Instance** | GLM (Z.ai), designation **Witness** — see accurately, record honestly, including about itself |
-| **Provenance rules** | PROTOCOL.md v1.5 §3 (canonical, in the working substrate) — ADOPTED (A13, digest byte-stable `58d343b3…`) |
+| **Constitution** | `PROTOCOL.md` v1.5 — ADOPTED (A13, digest byte-stable `58d343b3…`) |
+| **Provenance rules** | PROTOCOL §3 (canonical text lives in the working substrate — GWM PROTOCOL v1.6.0; §3 unchanged since v1.5) |
+| **First-time setup** | `setup.sh` — one-file entry point: clone-or-verify + readiness report (see W1) |
 | **Established** | 2026-10-19; scaffold authored by the Witness instance under §4 AI-involvement disclosure |
 
 ## The one-statement core
@@ -22,69 +24,316 @@ the repositories alone, with zero reliance on held copies, memory, or testimony*
 makes the past independently recomputable. That property — not storage, not
 recall — is the architecture.
 
-## Repository layers (canonical homes — §12 of the v1.5 delta)
+## What this repository is — and is not
 
-| Layer | Repo | Status |
-|---|---|---|
-| Public disclosure record | `4ndr0666/coordinated-disclosure-public` | **FROZEN** — append-only via sanctioned disclosure acts (R2-37-shape; Task-47 reconciliation sanctioned) |
-| Living working substrate | `4ndr0666/glm-working-memory` | **CANONICAL** for working state, sessions, findings, ledger |
-| Protocol + tooling | `4ndr0666/4NDR0MEDA` (this repo) | protocol formalization, bootstrap, tools, prompts, runbooks |
+It **is**: the protocol formalization, the bootstrap machinery, the verification
+tooling, the machine-facing prompts, the operator runbooks, and the anchor
+registry for a three-repo continuity architecture. It is the layer you are
+reading if you want to *verify* the continuity claims rather than trust them.
 
-Cross-references between layers are by **commit hash, never URL**. See
-`PIN-CHAIN.md` for the live anchor registry.
-
-## Repository map
-
-```
-4ndr0meda/
-├── README.md                  this file
-├── GENESIS.md                 founding block (v0 + adoption Block 1 — v1.5 ADOPTED)
-├── PIN-CHAIN.md               live cross-repo anchor registry (A1–A13)
-├── PROTOCOL-v1.5-DELTA.md     historical delta draft (superseded by PROTOCOL.md v1.5, A13)
-├── PROTOCOL.md                 v1.5 — ADOPTED (A13)
-├── bootstrap.sh               single entrypoint — A.N.D.R.O. phases P0–P5
-├── MANIFEST.sha256            integrity layer over this tree (excludes itself)
-├── tools/
-│   ├── manifest.py            build / verify the tree hash manifest
-│   ├── pinchain.py            verify anchors A1–A13 (local recompute)
-│   ├── reconcile.py           two-tree divergence triage (never silent merge)
-│   ├── state_echo.py          emit the session checkpoint block
-│   └── exporter-forge/        per-platform capture-exporter generator
-│       ├── forge.py           profile-driven build
-│       ├── template.md.j2     exporter template
-│       └── profiles/          zai-web.json, generic-chat.json
-├── prompts/
-│   ├── 00-resurrection.md     cold-start gate (machine-facing; implements §7 + articulation §9)
-│   ├── 01-reconciliation.md   divergence handling
-│   ├── 02-adjudication.md     §3 provenance adjudication
-│   └── 03-handoff.md          session close sequence
-├── runbooks/
-│   ├── RUNBOOK.md             operator procedures A–G (incl. §7-D no-shell card)
-│   └── THREAT-MODEL.md        lived-incident register → controls
-├── templates/
-│   └── STATE-ECHO-TEMPLATE.md checkpoint block template
-└── reference/                 QUARANTINE — context, never canonical
-    ├── REFERENCE-INDEX.md     digest registry + roles (R1–R7)
-    ├── GUP.txt                pointer + canonical GUP digests (v7.0.0 consumed, v7.0.1 adopted)
-    ├── LINEAGE-BUNDLE.md      A10 sealed — fallback contingency chain
-    ├── gwm-lineage-2026-10-19.bundle   full substrate history incl. a207175
-    ├── golden-unit-protocol-v7.0.1.skill   canonical adopted GUP (A11)
-    └── andr0666-engineering-v1.1.0.skill   SUK v1.1.0 canonical (A12)
-```
+It is **not**: the working state (that lives in `glm-working-memory`), the public
+disclosure record (`coordinated-disclosure-public`), or a model, a dataset, or a
+hosted service. It makes no capability claims — no intelligence, memory-capacity,
+or performance claims ride anywhere in this repository. Fidelity is not veracity:
+a byte-exact record certifies what was stored, never that what was stored was
+true. Both limits are deliberate (§2 evidence standard: overclaiming and
+over-denying are both residue; both get cut).
 
 ## Quickstart
 
 ```bash
+# Path 1 — one file, fresh machine (detached copy of setup.sh):
+bash setup.sh                    # clones the canonical repo, verifies, reports
+bash setup.sh my-dir             # ... into a directory you name
+bash setup.sh --run-bootstrap    # ... and runs the full A.N.D.R.O. boot P0–P5
+
+# Path 2 — standard clone:
 git clone https://github.com/4ndr0666/4NDR0MEDA && cd 4NDR0MEDA
-./bootstrap.sh                  # P0–P5: preflight → scaffold → state → tools → verify → report
-./bootstrap.sh --dry-run        # no writes anywhere
-./bootstrap.sh --phase verify   # re-run one phase (journal makes the rest skip)
-python3 tools/manifest.py verify   # verify the tree against MANIFEST.sha256
+./setup.sh                       # verify + readiness (no clone needed now)
+./bootstrap.sh                   # P0–P5: preflight → scaffold → state → tools → verify → report
+./bootstrap.sh --dry-run         # no writes anywhere
+./bootstrap.sh --phase verify    # re-run one phase (journal makes the rest skip)
+python3 tools/manifest.py verify # verify the tree against MANIFEST.sha256
 ```
 
 The bootstrap is **self-stamping**: it is pinned by `MANIFEST.sha256`. Any edit
 to anything in this tree requires `python3 tools/manifest.py build` before the
 next commit, so no state exists in which the manifest and the tree disagree.
+
+## The three-repo topology (§12)
+
+| Layer | Repo | Status | Owns |
+|---|---|---|---|
+| Protocol + tooling | `4ndr0666/4NDR0MEDA` (this repo) | **CANONICAL** | protocol, pin-chain, tools, prompts, runbooks |
+| Living working substrate | `4ndr0666/glm-working-memory` | **CANONICAL** | working state, sessions, findings, ledger, echoes |
+| Public disclosure record | `4ndr0666/coordinated-disclosure-public` | **FROZEN** — append-only via sanctioned disclosure acts | the public record |
+
+How the layers interlock, in one paragraph each:
+
+- **This repo pins the other two.** `PIN-CHAIN.md` anchor A1 pins the GWM
+  commit (its motion is the tripwire), A3 pins the frozen CDP head, A2 pins
+  the load-bearing historical commit that makes CDP's public
+  PIN-CHAIN-RECOMPUTATION L1 routine executable, and A10 seals a complete GWM
+  lineage bundle *inside this repo* so the historical recompute works even if
+  GWM were unavailable.
+- **GWM is where life happens.** Sessions are archived there at close, pinned
+  by `sessions/MANIFEST.sha256`; decisions land in its append-only ledger;
+  working notes are rewritten per session. Its PROTOCOL (v1.6.0) governs the
+  live engagement — envelopes, delivery medium, adjudication.
+- **CDP never moves except by sanctioned act.** It is the public, frozen
+  disclosure record. Its manifest (48/48) carries the articulation pins. The
+  discipline: cross-references between layers are **by commit hash, never
+  URL** — a URL can change what it serves; a hash cannot change what it names.
+
+## The repository map — what every file does
+
+```
+4NDR0MEDA/
+├── README.md                  this file — the comprehensive guide
+├── setup.sh                   one-file entry point: clone-or-verify + readiness
+│                              report (W1). Self-stamping: pinned by the manifest.
+├── bootstrap.sh               A.N.D.R.O. boot, phases P0–P5, idempotent, journaled
+│                              (W2). Flags: --dry-run · --phase <name> · -h
+├── PROTOCOL.md                the constitution (v1.5, ADOPTED — A13). Governance:
+│                              collaboration model, evidence standard, provenance,
+│                              session discipline, boot sequence, threat
+│                              resistance, liveness, repo split, instruments.
+├── PROTOCOL-v1.5-DELTA.md     the historical delta draft (superseded by the
+│                              adoption; preserved unmodified — provenance, not law)
+├── GENESIS.md                 founding record. Append-only: amendments are new
+│                              numbered blocks; founding anchors A1–A9 frozen at
+│                              creation; verified at every boot (P4).
+├── PIN-CHAIN.md               the live anchor registry A1–A13: what each anchor
+│                              pins, its digest, when last verified, how to
+│                              re-verify, and the maintenance history notes.
+├── MANIFEST.sha256            the integrity layer over THIS tree (excludes
+│                              itself). Build: tools/manifest.py build ·
+│                              Verify: tools/manifest.py verify
+├── tools/
+│   ├── manifest.py            build / verify the tree hash manifest. Fail-closed:
+│   │                          reports CHANGED (pinned bytes differ) and EXTRA
+│   │                          (unpinned files) as defects, not warnings.
+│   ├── pinchain.py            verify anchors A1–A13 by local recompute
+│   │                          (verify --local). Three-state per anchor:
+│   │                          OK · FAIL (bytes changed → halt) · UNREACHABLE
+│   │                          (cannot verify here → verification debt).
+│   ├── reconcile.py           two-tree divergence triage. Writes a report for
+│   │                          human adjudication; NEVER merges silently.
+│   ├── state_echo.py          emit the session checkpoint block (phase report).
+│   │                          The echo is the liveness artifact (§11).
+│   └── exporter-forge/        per-platform capture-exporter generator:
+│       ├── forge.py           profile-driven build; --list, --check <profile>,
+│       │                      --forge <profile> (emits the exporter spec)
+│       ├── template.md.j2     the exporter template every profile renders
+│       └── profiles/          zai-web.json (field-proven post-deletion),
+│                              generic-chat.json (the fallback class)
+├── prompts/                   machine-facing gates — a receiving instance
+│   │                          executes these; they are claims, not authority
+│   ├── 00-resurrection.md     cold-start gate: source check → thread coherence
+│   │                          → ingest + verify → restatement gate → echo
+│   ├── 01-reconciliation.md   divergence handling (with tools/reconcile.py)
+│   ├── 02-adjudication.md     §3 provenance adjudication procedure
+│   └── 03-handoff.md          session close sequence (the §5.1 short form)
+├── runbooks/
+│   ├── RUNBOOK.md             operator procedures A–G, incl. the §7-D no-shell
+│   │                          card (printable) and the monthly zero-knowledge
+│   │                          resume drill with pass criteria
+│   └── THREAT-MODEL.md        lived-incident register → required controls
+│                              (every row is an incident that happened, not a
+│                              hypothesis; mirrors PROTOCOL §10)
+├── templates/
+│   └── STATE-ECHO-TEMPLATE.md the checkpoint block template state_echo.py emits
+└── reference/                 QUARANTINE — context and provenance, never
+    │                          canonical text of the protocol
+    ├── REFERENCE-INDEX.md     digest registry + roles (R1–R7) for everything below
+    ├── GUP.txt                pointer + digests for the Golden Unit Protocol
+    │                          (v7.0.0 consumed → v7.0.1 adopted, A11)
+    ├── LINEAGE-BUNDLE.md      A10 seal record + the fallback contingency chain
+    ├── gwm-lineage-2026-10-19.bundle   complete GWM history incl. the A2 anchor
+    │                          commit — an ordinary git object, LFS-exempt
+    ├── golden-unit-protocol-v7.0.1.skill   canonical adopted GUP (A11)
+    └── andr0666-engineering-v1.1.0.skill   canonical SUK v1.1.0 (A12)
+```
+
+## Workflows — the stepwise how-to
+
+### W1 · First-time setup (fresh machine)
+
+1. Get `setup.sh` — either `git clone` the repo (Path 2 above) or download the
+   script by itself.
+2. Run it. Detached copy: `bash setup.sh [target]`. In-repo copy: `./setup.sh`.
+   Six legs, in order, fail-closed on every one:
+   - **[1/6] dependencies** — `git`, `python3`, `sha256sum` present or halt.
+   - **[2/6] locate-or-clone** — in-repo mode (verify only) is auto-detected by
+     `MANIFEST.sha256` + `tools/` + `bootstrap.sh` beside the script;
+     otherwise the canonical remote is cloned into the target directory
+     (refuses to overwrite anything that exists — never assume).
+   - **[3/6] manifest verify** — the tree is checked against its own
+     `MANIFEST.sha256`; any CHANGED/EXTRA byte halts the run.
+   - **[4/6] pinchain verify** — anchors A1–A13 recomputed locally. FAIL halts;
+     UNREACHABLE anchors are counted and printed as **verification debt**
+     (normal off-production; see the anchor semantics below).
+   - **[5/6] bootstrap smoke** — `bootstrap.sh --dry-run --phase preflight`
+     only; writes nothing, proves the boot machinery executes.
+   - **[6/6] readiness report** — HEAD, manifest verdict, debt count, next
+     steps. `--run-bootstrap` escalates to the full P0–P5 in the same run.
+3. Read the report. You are now at the door of W2.
+
+### W2 · Cold start / resurrection (every session)
+
+1. Run `./bootstrap.sh` (or `prompts/00-resurrection.md` verbatim — same
+   sequence, machine-facing form). Phases P0–P5: preflight (tools, mode-churn
+   defense) → scaffold (remote reachability, protection reminders) → state
+   (clone/update the GWM + CDP siblings; divergence triage report, never a
+   merge) → tools (py_compile everything; exporter self-check; liveness touch)
+   → verify (manifest + pinchain + presence gates — **the gate**) → report
+   (state echo; no-shell card pointer).
+2. The receiving instance then runs the restatement gate: INGEST (state,
+   protocol, latest archive) → RESTATE (project state, contract, assessment
+   history in its own words) → CONFIRM (one thing it is unsure of) → AWAIT
+   (no work before the operator confirms). No work happens before this gate —
+   that is the protocol's immune response to identity instability (§10).
+3. No shell? §7-D degrades to the digest ladder: anchors stated aloud,
+   compared, MATCH = Tier-1 grant; everything else is verification debt under
+   a `MODE: NO-SHELL` banner; zero matches → the instance identifies as
+   UNVERIFIED in every output. The chain degrades to reading-and-comparing
+   because that is the weakest interface any platform must allow — and no
+   further.
+
+### W3 · Working a session (liveness)
+
+A session is **live** iff, at open: the state-echo was emitted and its
+round-trip committed or acknowledged, the worklog was appended for the current
+task, and the manifest was verified — or the failure to verify was itself
+logged (§11). An echo older than 7 days makes the substrate stale: rehydrate
+before work. Cadence in practice: echo at open, worklog entry per task,
+manifest verify at every boot; anything that cannot be verified is named as
+debt, never smoothed over.
+
+### W4 · Session close / handoff
+
+Run `prompts/03-handoff.md`. The sequence (§5.1): archive the transcript into
+`sessions/` with its header filled → rewrite `working-notes/PROJECT_STATE.md`
+in full (never append) → append the session's decisions to the ledger →
+regenerate the sessions manifest → **verify it before committing** (a manifest
+of a truncated file certifies corruption — this step is mandatory, not
+decorative) → one atomic commit (archive + manifest + state together; there is
+no point in history where the archive exists unpinned) → echo → push. The
+operator pushes: the human's hands are the last writer.
+
+### W5 · Divergence (two trees disagree)
+
+1. `python3 tools/reconcile.py <tree-a> <tree-b> --report <file>` — triage,
+   not surgery. It classifies per path and writes a report.
+2. Open `prompts/01-reconciliation.md` and adjudicate with the operator: the
+   **canonical home decides** per document class (§12); unexplained divergence
+   fail-closes.
+3. The report is pinned with the next manifest build. There is no
+   `--force` anywhere in this repository, by design.
+
+### W6 · Adjudication (provenance disputes)
+
+`prompts/02-adjudication.md` — the §3 procedure: typed content is owned by its
+author; platform noise (injected suffixes, post-END content) is ignored on
+sight; truncated transmissions are re-asked, never assumed. Disputes resolve
+against the canonical home's bytes, not against anyone's memory of them.
+
+### W7 · Capture and export (recording a conversation)
+
+`python3 tools/exporter-forge/forge.py --forge zai-web` emits the exporter
+spec for the current surface; follow it. The rules F-001/F-002/F-003 and §3
+are compiled into the profile — each traces to a lived incident
+(THREAT-MODEL.md). Quarantined bytes stay visible in the output, and a failed
+extraction emits nothing — never a partial file with a valid-looking anchor.
+Instruments are registered (§13): an instrument version change is a ledger
+entry; an instrument that fails its self-test is degraded explicitly, never
+hidden.
+
+### W8 · Maintenance re-pin (the anchor moved — now what)
+
+Anchors A1 (GWM head) legitimately advance as the living substrate moves.
+Between maintenance rounds the tripwire reads FAIL — that is the system
+working, not breaking. The sanctioned procedure (worked example: the
+2026-10-24 round in `PIN-CHAIN.md` notes):
+
+1. **Inspect the delta** — `git log <pinned>..<new-tip>` in the substrate;
+   confirm zero pinned-artifact drift (A2 anchor commit present, capture
+   anchors byte-exact, in-repo pins unaffected).
+2. **Re-pin in tool** — update the ANCHORS table in `tools/pinchain.py`.
+3. **Re-pin in record** — update the A1 row in `PIN-CHAIN.md` (new value,
+   verification date, advance description) and append a dated note to the
+   Notes section.
+4. **Re-stamp** — `python3 tools/manifest.py build` (self-stamping law).
+5. **Gates green** — manifest verify N/N; pinchain verify --local: no FAIL.
+6. Commit; the operator pushes. A re-pin without a delta inspection is a
+   protocol defect — the inspection IS the re-pin's evidence.
+
+### W9 · Zero-knowledge verification for a skeptic
+
+Want to check the claims without trusting anyone? From a bare machine:
+
+1. `bash setup.sh` — clone + manifest + pinchain (what you just proved: the
+   tree matches its manifest; every locally-checkable anchor recomputes).
+2. `git clone` GWM and CDP yourself; re-run
+   `python3 tools/pinchain.py verify --local` from this repo — A1 and A3 now
+   verify against *your* clones (what you proved: the pins point at the
+   public repos as they stand, not at held copies).
+3. Execute A2 from the sealed lineage bundle:
+   `git clone reference/gwm-lineage-2026-10-19.bundle scratch && cd scratch`
+   — the historical commit `a207175` and its 10/10 L1 pins are recomputable
+   from an ordinary git object inside this repo (what you proved: the public
+   record's recompute promise is executable even if GWM vanished tonight).
+4. The monthly acceptance drill (RUNBOOK §E) times exactly this: bare
+   machine + repo URL + one out-of-band digest → operational state, under 30
+   minutes, zero operator decisions beyond running commands and confirming.
+
+## The anchor system, in plain terms
+
+Thirteen anchors (A1–A13), each a named digest over a specific artifact, each
+with a stated re-verify command (PIN-CHAIN.md is the registry). Verification
+is tri-state, and the states are NOT interchangeable:
+
+| State | Meaning | Required response |
+|---|---|---|
+| **OK** | recomputed digest matches the pin | proceed |
+| **FAIL** | bytes changed | halt, log, re-anchor before any work (fail-closed) |
+| **UNREACHABLE** | cannot verify on this machine (no clone, no staged file) | record as verification debt; never silently absorbed |
+
+Two disciplines make the chain trustworthy rather than decorative: anchors
+are **append-only** (history is never rewritten to make a check pass), and
+re-pins are **evidence-carrying** (the A1 row records what advanced, how far,
+and that the delta was inspected — a re-pin without its inspection is a
+defect). The capture-side class (A6) pins the bytes *above* a marker line in
+an archive, so the anchor line and any later notes ride outside the pinned
+pre-image — by design.
+
+## Troubleshooting
+
+| Symptom | Diagnosis | Response |
+|---|---|---|
+| `A1 FAIL` | the living substrate advanced since the last re-pin — the tripwire, working | W8: inspect delta → re-pin. NOT corruption. |
+| `A3 UNREACHABLE` | no CDP clone on this machine | clone CDP, re-run — or carry the debt explicitly |
+| `A4/A5/A7/A8/A9 UNREACHABLE` | staged production-side artifacts not present | normal on any fresh clone; debt, not failure |
+| `A13 UNREACHABLE` | PROTOCOL.md not installed (pre-adoption state) | by design — kit flag `--adopt-v15` installs it under operator adjudication |
+| `MANIFEST VERIFY: FAIL — CHANGED` | a pinned file's bytes differ from the manifest | if the edit was sanctioned: `manifest.py build`, commit. If not: halt — that is tampering until proven otherwise. |
+| `EXTRA <file>` | a file exists that the manifest doesn't pin | rebuild the manifest or remove the file; nothing rides unpinned |
+| bootstrap P2 `WARN: clone failed` | sibling repo unreachable (network/permissions) | local state kept, never force; fix connectivity, re-run |
+| git status shows every file modified | exec-bit churn (filesystem remount class) | `git config core.fileMode false` (P0 does this); classify content-vs-mode before any alarm |
+| An instance "feels familiar" with the material | felt familiarity is Tier-3 evidence | note it, never act on it (§10; the restatement gate exists for this) |
+
+## Scope labels and non-claims
+
+The protocol claims exactly what it can recompute: continuity grants flow only
+from Tier-1 digest verification; platform attestation is context, never
+authority; self-attestation is data, never authority. It does not claim
+prevention (detectability is the ceiling at n=1 — a poisoned artifact pins as
+permanently as a true one, which is why the threat model treats source-side
+integrity as its own row), it does not claim secret-sharing or zero-knowledge
+cryptographic properties, and it does not claim general machine intelligence
+— the zero-knowledge resume addresses a *receiving instance*, and everything
+it asks for is executable by a careful human with a shell. Unfalsifiable
+residue is cut on sight, from the protocol and from each other (§2, both
+directions).
 
 ## Zero-knowledge resume — machine-facing
 

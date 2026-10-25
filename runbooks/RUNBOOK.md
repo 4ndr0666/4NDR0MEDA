@@ -49,6 +49,10 @@ is a protocol defect: file it, fix the mechanism, re-run.
 
 ## F. Bootstrap reference
 
+First time on a fresh machine: `setup.sh` (one-file entry point — clone or
+verify, then a readiness report; see README W1). What follows is the boot
+itself.
+
 `./bootstrap.sh` — A.N.D.R.O. phases, idempotent, journaling:
 
 | Phase | Does | Notes |
