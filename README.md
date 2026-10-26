@@ -70,8 +70,9 @@ next commit, so no state exists in which the manifest and the tree disagree.
 
 How the layers interlock, in one paragraph each:
 
-- **This repo pins the other two.** `PIN-CHAIN.md` anchor A1 pins the GWM
-  commit (its motion is the tripwire), A3 pins the frozen CDP head, A2 pins
+- **This repo pins the other two.** `PIN-CHAIN.md` anchor A1 pins a GWM
+  session-archive snapshot (reachability-verified — boards motion is not a
+  trip; an unreachable snapshot is), A3 pins the frozen CDP head, A2 pins
   the load-bearing historical commit that makes CDP's public
   PIN-CHAIN-RECOMPUTATION L1 routine executable, and A10 seals a complete GWM
   lineage bundle *inside this repo* so the historical recompute works even if
@@ -251,12 +252,15 @@ hidden.
 
 ### W8 · Maintenance re-pin (the anchor moved — now what)
 
-Anchors A1 (GWM head) legitimately advance as the living substrate moves.
-Between maintenance rounds the tripwire reads FAIL — that is the system
-working, not breaking. The sanctioned procedure (worked example: the
-2026-10-24 round in `PIN-CHAIN.md` notes):
+Anchor A1 pins the **session-archive snapshot class** (operator pushes),
+verified by ancestor-reachability (ruling R, 2026-10-26): ordinary GWM
+boards commits do NOT trip it, and no GWM delivery requires a MEDA leg.
+A re-pin is warranted when a new session-close snapshot lands and the
+operator chooses to advance the pin — or never, if he prefers the pin to
+mark a fixed point in history. The sanctioned procedure (worked example:
+the 2026-10-24 round in `PIN-CHAIN.md` notes):
 
-1. **Inspect the delta** — `git log <pinned>..<new-tip>` in the substrate;
+1. **Inspect the delta** — `git log <pinned>..<new-snapshot>` in the substrate;
    confirm zero pinned-artifact drift (A2 anchor commit present, capture
    anchors byte-exact, in-repo pins unaffected).
 2. **Re-pin in tool** — update the ANCHORS table in `tools/pinchain.py`.
@@ -311,7 +315,7 @@ pre-image — by design.
 
 | Symptom | Diagnosis | Response |
 |---|---|---|
-| `A1 FAIL` | the living substrate advanced since the last re-pin — the tripwire, working | W8: inspect delta → re-pin. NOT corruption. |
+| `A1 FAIL` | the pinned session-archive snapshot is not reachable from GWM HEAD — history rewrite or detached substrate; the tamper tripwire | halt; verify GWM provenance before any work (W8 does NOT apply — this is not motion) |
 | `A3 UNREACHABLE` | no CDP clone on this machine | clone CDP, re-run — or carry the debt explicitly |
 | `A4/A5/A7/A8/A9 UNREACHABLE` | staged production-side artifacts not present | normal on any fresh clone; debt, not failure |
 | `A13 UNREACHABLE` | PROTOCOL.md not installed (pre-adoption state) | by design — kit flag `--adopt-v15` installs it under operator adjudication |

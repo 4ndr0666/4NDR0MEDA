@@ -7,7 +7,7 @@ is not FAIL (it means "cannot verify here"); FAIL means bytes changed.
 
 | ID | Pins | Value (SHA-256 / SHA-1) | Verified | Re-verify |
 |----|------|--------------------------|----------|-----------|
-| A1 | GWM HEAD (living substrate) | `23a9615a6308bac75781d6f493f017d3d16cf6e7` | 2026-10-24, fetch+pull; sessions/MANIFEST 30/30 at tip; v1.7-era re-pin — HEAD advanced `088ef69`→`23a9615` (17 commits: port-arc tail — AFT canon + PROTOCOL v1.5.3→v1.6.0 `canon-001` [§10 Delivery Medium: bundle+SUMS+orchestrator; GWM-layer rule, not a MEDA pin], Paper-2 v1.7 charter + draft-1 completion [§1–§8 r1], battery-1 ARGON brief, ARGON engagement re-type `argoninit` [adversary→collaboration partner], ARGON collab-1 integration [draft-2: §2–§8 r2 + receipt + integration ledger, 32 patches], task60 boards catch-up [ledger Tasks 57–60], operator session archives incl. the 2026-10-24 epoch-note archive); delta inspected — A2 anchor commit `a207175` present, A6 capture byte-exact (pinchain), in-repo pins A10–A13 unaffected; zero pinned-artifact drift | `python3 tools/pinchain.py verify --local` (LOCAL) |
+| A1 | GWM session-archive snapshot (reachability) | `23a9615a6308bac75781d6f493f017d3d16cf6e7` | 2026-10-26, operator ruling R (trace `1a175ab8298b859d`) over the boundary-7 four-option adjudication — CLASS + SEMANTICS re-typed, value retained from the 2026-10-24 round. Pin = the session-archive snapshot class (operator pushes; `23a9615` = session-013 close archive, sessions/MANIFEST 30/30; class precedent Task-59 `088ef69`). Check = ANCESTOR-REACHABILITY (`git merge-base --is-ancestor`), not HEAD equality: GWM boards commits no longer trip A1 — GWM bundles never require a MEDA leg; MEDA maintenance cadence = session-close cadence, re-pin at operator discretion. FAIL now means the pinned snapshot is unreachable from GWM HEAD — history-rewrite / detached-substrate class (the tamper tripwire). The task62 staged re-pin to `7a3bce5` (commit `897e957`, never applied) is WITHDRAWN: it re-introduced the standing boards-commit coupling the operator halted. History: `088ef69` (Task-59/c0e08c4 snapshot) → `23a9615` (2026-10-24) → `7a3bce5` staged-withdrawn → this row | `python3 tools/pinchain.py verify --local` (LOCAL) |
 | A2 | GWM@a207175 → CDP L1 pre-rename pins | commit `a207175474b850a8d001c19ddb2325f7e49f4084`; **10/10 OK** | 2026-10-19, `git show` loop (LOCAL) | `tools/pinchain.py` L1 routine |
 | A3 | CDP HEAD (frozen public record) | `6facbf17a8dcf5dad1bdd441b328760b8b49779f` | 2026-10-23, fetch+pull; root MANIFEST 48/48 at tip (carrying the R2-46 articulation pin); v1.6-era re-pin — frozen pin advanced `e2f3d86`→`6facbf17` (2 commits: `e96624d` decisions-index update [unpinned manifest drift, caught + isolated by GATE-B/R2-37 pre-build] + `6facbf1` R2-46 pin act + manifest reconciliation, Task-47 v1.6 build); re-pin = the MEDA-A3 maintenance queued at Tasks 36/50/56 and the prereq of the v1.6.1 refresh per R2-55 disposition (5.7 receipt §6.1). Re-verified unchanged 2026-10-24 (anonymous fetch; HEAD `6facbf17`; root manifest 48/48) | clone + `sha256sum -c MANIFEST.sha256` (LOCAL) |
 | A4 | CDP portable bundle (LFS) | `033f27a7179f4fb351765fe372c7f3eb551babc7868181bb18281cf050c12827` | 2026-10-19, pointer-OID match + `git bundle verify` OK | sha256 of retrieved bundle |
@@ -73,3 +73,18 @@ is not FAIL (it means "cannot verify here"); FAIL means bytes changed.
   advance (§10 delivery medium, AFT canon) is GWM-layer law; any MEDA
   constitution change remains an operator-adjudicated founding act
   (A13 discipline), not a maintenance rider.
+
+- **Ruling-R decoupling round (2026-10-26, trace `1a175ab8298b859d`)**: the
+  operator adjudicated the boundary-7 four-option disposition with option R —
+  A1 re-typed to the session-archive snapshot class under
+  ancestor-reachability. Anatomy of what this closes: under HEAD-equality, a
+  mainline pin coupled the two repos at every boards commit (the MEDA leg's
+  pinchain liveness expected GWM at the pin, so every GWM delivery required a
+  paired MEDA re-pin delivery, in a forced order). Under R: the pin verifies
+  from any descendant of the snapshot — order-independence restored, standing
+  coupling removed, and the trip surface narrows to exactly the class a
+  living-substrate anchor should fail on (history rewrite / detached
+  substrate). The withdrawn `7a3bce5` re-pin and its package (`897e957`,
+  never applied) are superseded by this round's commit; README W8 and the
+  troubleshooting table are updated in the same commit so tool and docs stay
+  one system.

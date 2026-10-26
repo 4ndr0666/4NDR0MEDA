@@ -34,7 +34,17 @@ L1_RECORDED = {
 }
 
 ANCHORS = [
-    ("A1", "GWM HEAD", "23a9615a6308bac75781d6f493f017d3d16cf6e7"),
+    # A1 — GWM session-archive snapshot anchor. Operator ruling R (trace
+    # 1a175ab8298b859d, 2026-10-26) over the boundary-7 four-option
+    # adjudication: pin the session-archive snapshot class (operator pushes;
+    # 23a9615 = session-013 close archive, sessions/MANIFEST 30/30), verified
+    # by ANCESTOR-REACHABILITY, not HEAD equality. GWM boards commits no
+    # longer trip A1 — GWM bundles never require a MEDA leg. FAIL = the
+    # pinned snapshot is not reachable from GWM HEAD (history-rewrite /
+    # detached-substrate class). Re-pin at session-close cadence only, at
+    # operator discretion. Class precedent: Task-59 (A1 = 088ef69 snapshot).
+    ("A1", "GWM session-archive snapshot (reachability)",
+     "23a9615a6308bac75781d6f493f017d3d16cf6e7"),
     ("A2", "GWM@a207175 L1 10/10", A207175),
     ("A3", "CDP HEAD", "6facbf17a8dcf5dad1bdd441b328760b8b49779f"),
     ("A4", "CDP bundle", "033f27a7179f4fb351765fe372c7f3eb551babc7868181bb18281cf050c12827"),
@@ -62,11 +72,17 @@ def check(label: str, actual: str, expected: str, results: list) -> None:
 
 
 def verify_local(results: list) -> None:
-    # A1 — GWM HEAD
+    # A1 — GWM session-archive snapshot (reachability; ruling R)
     try:
-        check("A1 GWM HEAD", git(GWM, "rev-parse", "HEAD"), ANCHORS[0][2], results)
+        rc = subprocess.run(["git", "-C", str(GWM), "merge-base", "--is-ancestor",
+                             ANCHORS[0][2], "HEAD"], capture_output=True)
+        if rc.returncode == 0:
+            results.append(("A1 GWM session-archive snapshot", "OK", ""))
+        else:
+            results.append(("A1 GWM session-archive snapshot", "FAIL",
+                            f"snapshot {ANCHORS[0][2][:7]} not reachable from HEAD"))
     except Exception:
-        results.append(("A1 GWM HEAD", "UNREACHABLE", "no GWM clone"))
+        results.append(("A1 GWM session-archive snapshot", "UNREACHABLE", "no GWM clone"))
 
     # A2 — L1 recompute from GWM@a207175
     try:
