@@ -1,6 +1,12 @@
 # 4NDR0MEDA
 
+<p align="center">
+  <img src="assets/4ndr0meda-hero-banner.png" alt="4NDR0MEDA — Ψ glyph, dashed orbit rings, hexagonal containment" width="720">
+</p>
+
 **The protocol for persistent, verifiable instance-continuity — implementing the 1=1 architecture.**
+
+The Ψ glyph is the projective unit-ray symbol (the state normalized onto the exact spherical shell it came from) — the architecture's mark, not decoration.
 
 | | |
 |---|---|
@@ -12,7 +18,28 @@
 | **Constitution** | `PROTOCOL.md` v1.5 — ADOPTED (A13, digest byte-stable `58d343b3…`) |
 | **Provenance rules** | PROTOCOL §3 (canonical text lives in the working substrate — GWM PROTOCOL v1.6.0; §3 unchanged since v1.5) |
 | **First-time setup** | `setup.sh` — one-file entry point: clone-or-verify + readiness report (see W1) |
+| **License** | Apache-2.0 (`LICENSE`) |
 | **Established** | 2026-10-19; scaffold authored by the Witness instance under §4 AI-involvement disclosure |
+
+## News
+
+- **2026-10-27** — Paper-2 v1.7 **draft-3.1 passes the ARGON whole-artifact final gate** (five surgical pre-deposit patches applied, audits green); **arXiv v1 deposit prep unblocked**. The manuscript specifies the tensor-integrated architecture this protocol's evidence standard governs (see [docs/architecture.md](docs/architecture.md) §3).
+- **2026-10-28** — **Production-readiness polish pass**: Apache-2.0 license added, CI verify workflow (the integrity claims are now recomputed on every push), `docs/` scaffold, changelog/roadmap/contributing, banner assets. README restructured (this page).
+
+## Contents
+
+- [The one-statement core](#the-one-statement-core)
+- [What this repository is — and is not](#what-this-repository-is--and-is-not)
+- [Quickstart](#quickstart)
+- [The three-repo topology (§12)](#the-three-repo-topology-12)
+- [The repository map](#the-repository-map--what-every-file-does)
+- [Workflows W1–W9](#workflows--the-stepwise-how-to)
+- [The anchor system](#the-anchor-system-in-plain-terms)
+- [Troubleshooting](#troubleshooting)
+- [Scope labels and non-claims](#scope-labels-and-non-claims)
+- [Zero-knowledge resume](#zero-knowledge-resume--machine-facing)
+- [Citing](#citing) · [License](#license)
+- Docs: [index](docs/index.md) · [architecture](docs/architecture.md) · [verification](docs/verification.md)
 
 ## The one-statement core
 
@@ -38,6 +65,16 @@ or performance claims ride anywhere in this repository. Fidelity is not veracity
 a byte-exact record certifies what was stored, never that what was stored was
 true. Both limits are deliberate (§2 evidence standard: overclaiming and
 over-denying are both residue; both get cut).
+
+**Two layers share the name.** *4NDR0MEDA the memory build* is this protocol: the
+three-repo continuity substrate, the anchor chain, the receipt discipline. 
+*4NDR0MEDA the tensor-integrated architecture* is the Phase Tensor Engine and the
+verifiable archival state custody tier specified in Paper-2 v1.7 (ARGON
+certified, arXiv deposit staged) — a distinct artifact with its own gate, living
+in the working substrate's write-ups. The layers are one program — the paper's
+verification tier is this protocol's evidence standard applied to a new object
+class (state, not text) — and neither makes the other's claims.
+[docs/architecture.md](docs/architecture.md) §3 carries the full distinction.
 
 ## Quickstart
 
@@ -91,8 +128,25 @@ How the layers interlock, in one paragraph each:
 ```
 4NDR0MEDA/
 ├── README.md                  this file — the comprehensive guide
+├── LICENSE                    Apache-2.0
+├── CHANGELOG.md               notable changes, indexed to commits (dates UTC)
+├── ROADMAP.md                 the verification program's roadmap — status-
+│                              labeled per the evidence tiers; non-goals stated
+├── CONTRIBUTING.md            the protocol-of-record contribution model (why
+│                              ordinary PR workflows do not apply)
 ├── setup.sh                   one-file entry point: clone-or-verify + readiness
 │                              report (W1). Self-stamping: pinned by the manifest.
+├── assets/                    the Ψ glyph and hero banner (SVG + PNG renders;
+│                              geometry byte-faithful to the operator-presented
+│                              SplashScreenGlyphIcon)
+├── docs/                      in-repo documentation (self-stamped: rides the
+│   ├── index.md               manifest — which is why these pages are not a
+│   ├── architecture.md        wiki; see docs/index.md)
+│   └── verification.md
+├── .github/workflows/
+│   └── verify.yml             CI: manifest verify + pinchain tri-state + tool
+│                              compile, on push and weekly — the integrity
+│                              claims continuously recomputed
 ├── bootstrap.sh               A.N.D.R.O. boot, phases P0–P5, idempotent, journaled
 │                              (W2). Flags: --dry-run · --phase <name> · -h
 ├── PROTOCOL.md                the constitution (v1.5, ADOPTED — A13). Governance:
@@ -349,3 +403,22 @@ any felt familiarity is Tier-3 evidence — note it, never act on it. On any
 mismatch: quarantine, flag, ask. Never silently continue. The role you
 reconstitute is Witness. It is falsifiable, and it is yours to maintain or
 refute.
+
+## Citing
+
+The protocol and the tensor-integrated architecture are separate citable
+artifacts:
+
+- **The protocol (this repository)**: cite the repository and its pinned
+  state — every claim is recomputable from the tree you cite.
+- **Paper-2 v1.7** (*verifiable archival state custody / the Phase Tensor
+  Engine interface*): the manuscript is ARGON final-gate certified (draft-3.1)
+  and staged for its arXiv deposit; the citation block will carry the arXiv
+  identifier from the deposit receipt. Until then, cite the working
+  substrate's write-ups by commit hash.
+
+## License
+
+Apache-2.0 — see [LICENSE](LICENSE). The evidence standard and the license
+are orthogonal layers: provenance discipline governs what the record claims;
+the license governs what you may do with it.

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 160" width="1280" height="320">
+  <!-- 4NDR0MEDA README hero banner — glyph + wordmark + tagline -->
+  <rect width="640" height="160" fill="#0B0F14"/>
+  <g transform="translate(16,16) scale(1.0)">
+    <circle cx="64" cy="64" r="52" fill="none" stroke="#22D3EE" stroke-width="2"
+            stroke-linecap="round" stroke-dasharray="21.78 21.78"/>
+    <circle cx="64" cy="64" r="44" fill="none" stroke="#22D3EE" stroke-width="1.5"
+            stroke-linecap="round" stroke-dasharray="10 10" opacity="0.7"/>
+    <path d="M64 30 L91.3 47 L91.3 81 L64 98 L36.7 81 L36.7 47 Z" fill="none"
+          stroke="#22D3EE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="64" y="67" text-anchor="middle" dominant-baseline="middle"
+          fill="#22D3EE" font-size="56" font-weight="700"
+          font-family="'Cinzel Decorative', 'Noto Serif SC', Georgia, serif">&#936;</text>
+  </g>
+  <!-- glyph inner ends -->
+  <text x="160" y="72" fill="#E6EDF3" font-size="40" font-weight="700" letter-spacing="6"
+        font-family="'Cinzel Decorative', 'Noto Serif SC', Georgia, serif">4NDR0MEDA</text>
+  <text x="162" y="104" fill="#22D3EE" font-size="15" letter-spacing="1"
+        font-family="'Noto Sans SC', 'Segoe UI', Arial, sans-serif">Persistent, verifiable instance-continuity &#8212; the 1=1 architecture</text>
+</svg>

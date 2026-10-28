@@ -88,3 +88,18 @@ is not FAIL (it means "cannot verify here"); FAIL means bytes changed.
   never applied) are superseded by this round's commit; README W8 and the
   troubleshooting table are updated in the same commit so tool and docs stay
   one system.
+
+- **Polish pass (2026-10-28, operator work order, trace `1a1808b0cc388cad`)**:
+  production-readiness pass per the memobase combat assessment — NO anchor
+  values changed, NO constitution change (PROTOCOL.md untouched, A13
+  discipline). Added: LICENSE (Apache-2.0), CHANGELOG/ROADMAP/CONTRIBUTING,
+  `.github/workflows/verify.yml` (manifest + pinchain tri-state + tool
+  compile, push + weekly — the CI is the standing recompute of this file's
+  own gates), `assets/` (Ψ glyph + hero banner, geometry byte-faithful to
+  the operator-presented SplashScreenGlyphIcon), `docs/` (in-repo rather
+  than wiki: self-stamping law — a wiki page cannot be manifest-pinned;
+  wiki mirroring remains an operator-adjudicable later act). README
+  restructured (hero, news, TOC, two-layers scope bridge, citing/license
+  sections); W1–W9 content preserved. Self-stamping law honored (manifest
+  rebuilt, now 43/43). Gates at commit: manifest 43/43, pinchain 13 checked
+  0 FAIL 8 OK 5 unreachable (debt classes unchanged).

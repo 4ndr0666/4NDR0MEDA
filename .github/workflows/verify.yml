@@ -1,0 +1,36 @@
+name: verify
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '17 3 * * 1'   # weekly tamper tripwire, Monday 03:17 UTC
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 'Leg 1 — manifest verify (self-stamping gate: tree == MANIFEST.sha256)'
+        run: python3 tools/manifest.py verify
+
+      - name: 'Leg 2 — pin-chain verify (tri-state: OK proceeds; FAIL halts; UNREACHABLE = verification debt, exit 0)'
+        run: python3 tools/pinchain.py verify --local
+
+      - name: 'Leg 3 — tooling compiles'
+        run: |
+          python3 -m py_compile tools/manifest.py tools/pinchain.py tools/reconcile.py tools/state_echo.py
+          python3 tools/manifest.py verify --report-only >/dev/null && echo "report-only leg OK"
+
+      - name: Readiness report
+        run: |
+          echo "verify workflow complete — integrity claims recomputed on $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo "unreachable anchors on a CI runner are expected debt (no sibling clones); clone GWM/CDP and run pinchain.py verify --local for full coverage (README W9)"
