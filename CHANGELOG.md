@@ -4,6 +4,24 @@ All notable changes to this repository are documented here. Dates are UTC.
 Commits are the canonical record — this file is the human-readable index.
 The integrity layer is `MANIFEST.sha256` (self-stamping; see README W8).
 
+## [2026-10-29] — maintenance: pinchain resolvability + layout overrides
+
+Task-73 registered closure (Task-72 §3.4(ii)): the standing operator-side A1
+FAIL is adjudicated **defect-class** — no GWM clone resolvable from
+`4ndr0tools/4NDR0MEDA`, and `pinchain.py` rendered the unresolvable target as
+FAIL instead of UNREACHABLE (`subprocess.run` rc semantics; differential
+signature A1-FAIL + A2-UNREACHABLE from the same missing clone, proven by the
+operator's full-table paste). Witness-side ancestor-reachability green at
+GWM@`4062d7f`; pin value `23a9615` unchanged; no re-pin. **Fixed**:
+(1) `--workspace` / `--gwm` / `--cdp` / `--download` path overrides
+(D-class #2) — production layouts now resolve the anchors the sibling-clone
+layout does; (2) `is_repo()` resolvability guards — missing clones report
+UNREACHABLE with the remedy, never a false FAIL (differential test at commit:
+`--gwm /nonexistent` renders A1 UNREACHABLE); (3) verify companions print the
+full per-anchor table (D-class #1). README troubleshooting gains the
+differential-signature row. Manifest re-stamped (43/43). No anchor, protocol,
+or constitution changes (A13 discipline).
+
 ## [2026-10-28] — polish-pass-2026-10-28
 
 Operator work order (memobase combat-assessment reverse-engineering): production

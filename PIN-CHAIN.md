@@ -103,3 +103,28 @@ is not FAIL (it means "cannot verify here"); FAIL means bytes changed.
   sections); W1–W9 content preserved. Self-stamping law honored (manifest
   rebuilt, now 43/43). Gates at commit: manifest 43/43, pinchain 13 checked
   0 FAIL 8 OK 5 unreachable (debt classes unchanged).
+
+- **Maintenance round (2026-10-29, Task-73 registered closure, trace
+  `1a184806a91640c9`)**: A1 resolvability defect fixed + layout overrides
+  added; NO anchor values changed. Defect anatomy: `subprocess.run` returns
+  rc != 0 WITHOUT raising when the GWM path is absent, so A1's except-branch
+  never fired and a missing clone rendered as FAIL (the tamper class)
+  instead of UNREACHABLE — the exact differential signature in the
+  operator's 2026-10-29 full-table paste (A1 FAIL + A2 UNREACHABLE from
+  the same missing clone: production runs from `4ndr0tools/4NDR0MEDA`, so
+  the sibling path `4ndr0tools/glm-working-memory` does not exist).
+  Adjudication of the standing production A1 FAIL: **defect-class, not
+  movement, not tamper** — witness-side ancestor-reachability is GREEN at
+  GWM@`4062d7f` with the pin value UNCHANGED (`23a9615` IS an ancestor; no
+  re-pin; the Task-72 §3.3 candidate-set confinement is superseded by the
+  pasted table). Fixes: (1) `--workspace` / `--gwm` / `--cdp` /
+  `--download` path overrides (D-class #2) so production layouts resolve
+  the same anchors the sibling-clone layout does; (2) `is_repo()`
+  resolvability guards on A1/A2/A3 — missing targets report UNREACHABLE
+  with the remedy, never a false FAIL; (3) verify companions print the
+  full per-anchor table (D-class #1 — the task70 companion's `tail -1`
+  swallowed it); README troubleshooting gains the differential-signature
+  row. Differential test at commit: forced `--gwm /nonexistent` renders
+  A1 UNREACHABLE (pre-fix rendering was FAIL). Gates at commit: manifest
+  43/43, pinchain 13 checked 0 FAIL 8 OK 5 unreachable (debt classes
+  unchanged). A13 discipline: PROTOCOL.md untouched.

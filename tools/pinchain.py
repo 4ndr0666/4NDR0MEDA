@@ -7,6 +7,16 @@ Verify modes:
                      UNREACHABLE = cannot verify here (fine). FAIL = bytes
                      changed (fail-closed). Exit 1 only on FAIL.
 
+Path overrides (D-class #2 fix, Task-73, trace 1a184806a91640c9): the
+default layout assumes the sibling-clone workspace (this repo's parent
+hosts glm-working-memory / coordinated-disclosure-public / download).
+Production layouts differ — pass --workspace PATH (the directory hosting
+the sibling clones) or per-target --gwm / --cdp / --download PATH so the
+same anchors resolve anywhere. A missing or unresolvable target reports
+UNREACHABLE with the remedy, never a false FAIL (the 2026-10-29 defect:
+subprocess.run returns rc != 0 WITHOUT raising on an absent path, so an
+except-branch never fired and A1 rendered a missing clone as FAIL).
+
 L1 routine re-derives the 10 pre-rename session pins from GWM@a207175 —
 the same loop documented in coordinated-disclosure-public
 PIN-CHAIN-RECOMPUTATION.md, executed and recorded 2026-10-19 (10/10 OK).
@@ -17,7 +27,23 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent.parent
 WORKSPACE = HERE.parent  # sibling-clone layout: workspace/{4ndr0meda,glm-working-memory,...}
 GWM = WORKSPACE / "glm-working-memory"
+CDP = WORKSPACE / "coordinated-disclosure-public"
 DOWNLOAD = WORKSPACE / "download"
+
+
+def is_repo(p: Path) -> bool:
+    """True iff p exists and resolves as a git repository.
+
+    Resolvability guard (Task-73 fix): subprocess.run returns rc != 0
+    WITHOUT raising when the path is absent, so an except-branch never
+    fires for a missing clone — the defect where A1 printed FAIL (the
+    tamper class) where it should have said UNREACHABLE (verification
+    debt with a remedy).
+    """
+    return p.exists() and subprocess.run(
+        ["git", "-C", str(p), "rev-parse", "--git-dir"],
+        capture_output=True,
+    ).returncode == 0
 
 A207175 = "a207175474b850a8d001c19ddb2325f7e49f4084"
 L1_RECORDED = {
@@ -72,39 +98,52 @@ def check(label: str, actual: str, expected: str, results: list) -> None:
 
 
 def verify_local(results: list) -> None:
-    # A1 — GWM session-archive snapshot (reachability; ruling R)
-    try:
+    # A1 — GWM session-archive snapshot (reachability; ruling R).
+    # Resolvability guard first (Task-73): an unresolvable GWM path is
+    # UNREACHABLE (debt + remedy), never FAIL (the tamper class).
+    if not is_repo(GWM):
+        results.append(("A1 GWM session-archive snapshot", "UNREACHABLE",
+                        f"no GWM clone at {GWM} (pass --gwm PATH or --workspace PATH)"))
+    else:
         rc = subprocess.run(["git", "-C", str(GWM), "merge-base", "--is-ancestor",
                              ANCHORS[0][2], "HEAD"], capture_output=True)
         if rc.returncode == 0:
             results.append(("A1 GWM session-archive snapshot", "OK", ""))
         else:
             results.append(("A1 GWM session-archive snapshot", "FAIL",
-                            f"snapshot {ANCHORS[0][2][:7]} not reachable from HEAD"))
-    except Exception:
-        results.append(("A1 GWM session-archive snapshot", "UNREACHABLE", "no GWM clone"))
+                            f"snapshot {ANCHORS[0][2][:7]} not reachable from HEAD "
+                            "(history-rewrite / detached-substrate class)"))
 
     # A2 — L1 recompute from GWM@a207175
-    try:
-        oks = fails = 0
-        for path, dg in L1_RECORDED.items():
-            blob = subprocess.run(["git", "-C", str(GWM), "show", f"{A207175}:{path}"],
-                                  capture_output=True, check=True).stdout
-            if sha(blob) == dg:
-                oks += 1
-            else:
-                fails += 1
-        results.append((f"A2 L1 recompute ({oks}/{len(L1_RECORDED)})",
-                        "OK" if fails == 0 and oks == len(L1_RECORDED) else "FAIL", ""))
-    except Exception:
-        results.append(("A2 L1 recompute", "UNREACHABLE", "no GWM clone / missing objects"))
+    if not is_repo(GWM):
+        results.append(("A2 L1 recompute", "UNREACHABLE",
+                        f"no GWM clone at {GWM} (pass --gwm PATH or --workspace PATH)"))
+    else:
+        try:
+            oks = fails = 0
+            for path, dg in L1_RECORDED.items():
+                blob = subprocess.run(["git", "-C", str(GWM), "show", f"{A207175}:{path}"],
+                                      capture_output=True, check=True).stdout
+                if sha(blob) == dg:
+                    oks += 1
+                else:
+                    fails += 1
+            results.append((f"A2 L1 recompute ({oks}/{len(L1_RECORDED)})",
+                            "OK" if fails == 0 and oks == len(L1_RECORDED) else "FAIL", ""))
+        except Exception:
+            results.append(("A2 L1 recompute", "UNREACHABLE",
+                            "a207175 objects missing from the GWM clone"))
 
     # A3 — CDP HEAD
-    cdp = WORKSPACE / "coordinated-disclosure-public"
-    try:
-        check("A3 CDP HEAD", git(cdp, "rev-parse", "HEAD"), ANCHORS[2][2], results)
-    except Exception:
-        results.append(("A3 CDP HEAD", "UNREACHABLE", "no CDP clone"))
+    if not is_repo(CDP):
+        results.append(("A3 CDP HEAD", "UNREACHABLE",
+                        f"no CDP clone at {CDP} (pass --cdp PATH or --workspace PATH)"))
+    else:
+        try:
+            check("A3 CDP HEAD", git(CDP, "rev-parse", "HEAD"), ANCHORS[2][2], results)
+        except Exception:
+            results.append(("A3 CDP HEAD", "UNREACHABLE",
+                            "git rev-parse failed on the CDP clone"))
 
     # A4/A5/A7/A8/A9 — file digests where staged copies exist
     for aid, label, path in (
@@ -159,10 +198,30 @@ def verify_local(results: list) -> None:
 
 
 def main() -> int:
+    global WORKSPACE, GWM, CDP, DOWNLOAD
     ap = argparse.ArgumentParser()
     ap.add_argument("cmd", choices=["list", "verify"])
     ap.add_argument("--local", action="store_true")
+    ap.add_argument("--workspace", metavar="PATH", default=None,
+                    help="workspace root hosting the sibling clones (default: this repo's parent)")
+    ap.add_argument("--gwm", metavar="PATH", default=None,
+                    help="GWM clone path override")
+    ap.add_argument("--cdp", metavar="PATH", default=None,
+                    help="CDP clone path override")
+    ap.add_argument("--download", metavar="PATH", default=None,
+                    help="staged-download path override")
     args = ap.parse_args()
+    if args.workspace:
+        ws = Path(args.workspace).expanduser().resolve()
+        GWM = ws / "glm-working-memory"
+        CDP = ws / "coordinated-disclosure-public"
+        DOWNLOAD = ws / "download"
+    if args.gwm:
+        GWM = Path(args.gwm).expanduser().resolve()
+    if args.cdp:
+        CDP = Path(args.cdp).expanduser().resolve()
+    if args.download:
+        DOWNLOAD = Path(args.download).expanduser().resolve()
     if args.cmd == "list":
         for aid, label, value in ANCHORS:
             print(f"{aid}  {label:<28} {value}")

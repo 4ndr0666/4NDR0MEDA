@@ -227,7 +227,10 @@ How the layers interlock, in one paragraph each:
      `MANIFEST.sha256`; any CHANGED/EXTRA byte halts the run.
    - **[4/6] pinchain verify** — anchors A1–A13 recomputed locally. FAIL halts;
      UNREACHABLE anchors are counted and printed as **verification debt**
-     (normal off-production; see the anchor semantics below).
+     (normal off-production; see the anchor semantics below). Non-sibling
+     layouts pass `--workspace PATH` (or `--gwm` / `--cdp` / `--download`)
+     so the same anchors resolve — e.g.
+     `python3 tools/pinchain.py verify --local --workspace /path/to/clones`.
    - **[5/6] bootstrap smoke** — `bootstrap.sh --dry-run --phase preflight`
      only; writes nothing, proves the boot machinery executes.
    - **[6/6] readiness report** — HEAD, manifest verdict, debt count, next
@@ -370,6 +373,7 @@ pre-image — by design.
 | Symptom | Diagnosis | Response |
 |---|---|---|
 | `A1 FAIL` | the pinned session-archive snapshot is not reachable from GWM HEAD — history rewrite or detached substrate; the tamper tripwire | halt; verify GWM provenance before any work (W8 does NOT apply — this is not motion) |
+| `A1 FAIL` + `A2 UNREACHABLE` together | the differential signature of the resolvability defect fixed 2026-10-29: no GWM clone at the default sibling path, so A1 saw `git` fail silently (rc≠0, no exception) where A2's `check=True` raised — a layout problem rendered as tamper | re-run with `--workspace PATH` (or `--gwm PATH`) pointing at the directory hosting the clones; post-fix a missing clone renders as `UNREACHABLE` with the remedy, never `FAIL` |
 | `A3 UNREACHABLE` | no CDP clone on this machine | clone CDP, re-run — or carry the debt explicitly |
 | `A4/A5/A7/A8/A9 UNREACHABLE` | staged production-side artifacts not present | normal on any fresh clone; debt, not failure |
 | `A13 UNREACHABLE` | PROTOCOL.md not installed (pre-adoption state) | by design — kit flag `--adopt-v15` installs it under operator adjudication |
