@@ -1,6 +1,22 @@
+# Protocol runtime & ephemeral boundary state
 .bootstrap-journal
 .liveness
 memory/
 dist/
+
+# Python / PyTorch / packaging artifacts
 __pycache__/
 *.pyc
+*.py[cod]
+*$py.class
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Unpinned local scratch checkpoints (governed checkpoints ride MANIFEST.sha256)
+*.tmp
+*.bak
+.DS_Store
